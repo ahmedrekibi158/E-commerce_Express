@@ -1,0 +1,39 @@
+.sidebar {
+    width: 200px;
+    height: 100%;
+    background-color: #333;
+    position: fixed;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 10px;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Style for the content */
+.content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+/* Define CSS classes for the form elements */
+.form-label {
+    display: block; /* Ensures labels appear on separate lines */
+    margin-bottom: 5px; /* Adds spacing between labels and inputs */
+    font-weight: bold; /* Makes labels bold */
+}
+
+.form-input {
+    width: 100%; /* Makes the inputs take up the full width of their container */
+    padding: 5px; /* Adds some padding to inputs */
+    margin-bottom: 10px; /* Adds spacing between inputs */
+}
