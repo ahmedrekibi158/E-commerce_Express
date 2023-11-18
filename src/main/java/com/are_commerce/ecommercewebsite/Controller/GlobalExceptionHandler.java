@@ -7,6 +7,7 @@ import com.are_commerce.ecommercewebsite.Exceptions.ProductServiceException;
 import com.are_commerce.ecommercewebsite.Model.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -32,6 +33,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProductDuplicateException.class)
     public ResponseEntity<String> handleProductDuplicate(ProductDuplicateException ex){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<String> handleUsernameNotFound(UsernameNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
 
