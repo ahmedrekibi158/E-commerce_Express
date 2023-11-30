@@ -1,29 +1,59 @@
 package com.are_commerce.ecommercewebsite.Model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "user")
-public class DBUser {
+@Entity
+@Table(name = "users")
+public class DBUser{
+
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String password;
-    public String role;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Order> orders;
+
+    @Email
+    private String email;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String address;
+
+    private String phoneNumber;
+
+    public DBUser(String username, String password, Role role, String email, String firstName,
+                  String lastName, String address, String phoneNumber) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
 }
+

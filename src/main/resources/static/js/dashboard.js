@@ -1,7 +1,7 @@
 function showProducts() {
     var content = document.getElementById('content');
     
-    fetch('http://localhost:8080/admin/products')
+    fetch('http://localhost:8080/admin/dashboard')
         .then(response => response.json()) // Parse the response as JSON
         .then(data => {
             console.log("test");

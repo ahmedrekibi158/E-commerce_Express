@@ -1,16 +1,15 @@
 package com.are_commerce.ecommercewebsite.Controller;
 
-import com.are_commerce.ecommercewebsite.Exceptions.ProductDuplicateException;
-import com.are_commerce.ecommercewebsite.Exceptions.ProductInactiveException;
-import com.are_commerce.ecommercewebsite.Exceptions.ProductNotFoundException;
-import com.are_commerce.ecommercewebsite.Exceptions.ProductServiceException;
-import com.are_commerce.ecommercewebsite.Model.Product;
+import com.are_commerce.ecommercewebsite.Exceptions.*;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.BadJwtException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -39,5 +38,37 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleUsernameNotFound(UsernameNotFoundException ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
-}
 
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<String> handleNullPointerException(NullPointerException ex) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
+    }
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<String> handleBadCredentialsException(BadCredentialsException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+    @ExceptionHandler(UserExistsException.class)
+    public ResponseEntity<String> handleUserExistsException(UserExistsException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+
+
+
+
+    /*@ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleJwtException(RuntimeException ex){
+        if (ex.getCause() instanceof ExpiredJwtException)
+            return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body(ex.getMessage());
+        if (ex.getCause() instanceof BadJwtException)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error");
+    }*/
+
+
+}

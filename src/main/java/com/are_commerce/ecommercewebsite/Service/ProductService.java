@@ -30,7 +30,7 @@ public class ProductService {
         }
     }
 
-    public Product getProductById(String id) throws ProductServiceException, ProductInactiveException, ProductNotFoundException{
+    public Product getProductById(Long id) throws ProductServiceException, ProductInactiveException, ProductNotFoundException{
         try {
             // Data access logic to retrieve the product by its ID
             Optional<Product> productOptional = productRepository.findById(id);
@@ -66,7 +66,7 @@ public class ProductService {
         }
     }
 
-    public boolean deleteProduct(String id) throws ProductServiceException, ProductNotFoundException {
+    public boolean deleteProduct(Long id) throws ProductServiceException, ProductNotFoundException {
         try {
             if (productRepository.existsById(id)) {
                 productRepository.deleteById(id);
@@ -79,6 +79,7 @@ public class ProductService {
             throw new ProductServiceException("Error deleting the product from the database.");
         }
     }
+    /*
     public Product updateProduct(Product product) throws ProductServiceException, ProductDuplicateException, ProductNotFoundException {
         try{
             boolean existingProductByName=productRepository.existsByName(product.getName());
@@ -92,5 +93,5 @@ public class ProductService {
         catch(DataAccessException ex){
             throw new ProductServiceException("Error updating the product. Please try again later.");
         }
-    }
+    }*/
 }

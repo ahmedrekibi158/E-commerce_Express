@@ -1,21 +1,45 @@
 package com.are_commerce.ecommercewebsite.Model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
-@Document(collection = "order")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "orders")
 public class Order {
-    @Id
-    private String id;
-    private String userId; // Store user ID here
-    private List<OrderItem> products;
-    private LocalDateTime orderDate;
-    private double totalAmount;
-    private String shippingAddress;
-    private String status;
 
-    // Getters and setters
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private DBUser user;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private Set<Product> products;
+
+    @NotNull
+    private Double total;
+
+    @NotNull
+    private LocalDateTime orderDate;
+
+    @NotBlank
+    private String shippingAddress;
+
+    @NotBlank
+    private String status;
 }

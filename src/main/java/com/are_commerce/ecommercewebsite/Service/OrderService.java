@@ -24,7 +24,7 @@ public class OrderService {
         orderRepository.save(order);
         return order;
     }
-    public Optional<Order> getOrder(String id, Order order){
+    public Optional<Order> getOrder(Long id, Order order){
         return orderRepository.findById(id);
     }
 

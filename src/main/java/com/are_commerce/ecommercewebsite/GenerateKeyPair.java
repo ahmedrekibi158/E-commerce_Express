@@ -11,7 +11,21 @@ import org.bouncycastle.util.io.pem.PemWriter;
 
 public class GenerateKeyPair {
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        class JwtTokenProvider{
+            private KeyPair keyPair;
+
+            public JwtTokenProvider() {
+            try {
+                KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+                keyPairGenerator.initialize(2048);
+                this.keyPair = keyPairGenerator.generateKeyPair();
+                System.out.println(keyPair);
+            } catch (NoSuchAlgorithmException e) {
+                // Handle exception
+            }
+        }}
+
+        /*KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
         byte[] pub = keyPair.getPublic().getEncoded();
         byte[] pri = keyPair.getPrivate().getEncoded();
@@ -26,6 +40,6 @@ public class GenerateKeyPair {
         try (PemWriter pemWriter2 = new PemWriter(new OutputStreamWriter(new FileOutputStream("pri.pem")))) {
             PemObject pemObject2 = new PemObject("PRIVATE KEY", pri);
             pemWriter2.writeObject(pemObject2);
-        }
+        }*/
     }
 }
